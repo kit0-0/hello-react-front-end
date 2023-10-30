@@ -37,7 +37,7 @@
 # 📖 React Frontend <a name="about-project"></a>
 
 **React Frontend** is web project using react that will show you a greeting from an api server
-This is the link to the [backend](https://github.com/kit0-0/hello-rails-back-end)
+This is the link to the [backend]([https://github.com/kit0-0/hello-rails-back-end](https://github.com/kit0-0/hello-rails-back-end/pull/1))
 
 
 ## 🛠 Built With <a name="built-with"></a>
