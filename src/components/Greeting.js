@@ -1,23 +1,44 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchRandomGreeting } from '../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import fetchRandomGreeting from '../redux/actions';
 
-const Greeting = ({ greeting, fetchRandomGreeting }) => {
+const Greeting = () => {
+  const dispatch = useDispatch();
+  const { greeting, loading, error } = useSelector((state) => state.greeting);
+
   useEffect(() => {
-    fetchRandomGreeting();
-  }, [fetchRandomGreeting]);
+    dispatch(fetchRandomGreeting());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        Error fetching greeting:
+        {' '}
+        {error.message}
+      </div>
+    );
+  }
+
+  let greetingContent;
+
+  if (typeof greeting === 'string') {
+    greetingContent = greeting;
+  } else if (typeof greeting === 'object' && greeting !== null && 'greeting' in greeting) {
+    greetingContent = greeting.greeting;
+  } else {
+    greetingContent = 'Invalid greeting format.';
+  }
 
   return (
     <div>
-      <h1>{greeting}</h1>
+      <h1>{greetingContent}</h1>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    greeting: state.greeting,
-  };
-};
-
-export default connect(mapStateToProps, { fetchRandomGreeting })(Greeting);
+export default Greeting;

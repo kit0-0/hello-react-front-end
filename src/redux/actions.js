@@ -1,12 +1,14 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchRandomGreeting = () => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get('http://localhost:3000/random_greeting');
-      dispatch({ type: 'SET_GREETING', payload: response.data.greeting });
-    } catch (error) {
-      console.error('Error fetching greeting:', error);
-    }
-  };
-};
+const fetchRandomGreeting = createAsyncThunk('greeting/fetchRandomGreeting', async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/random_greeting');
+    return response.data.greeting;
+  } catch (error) {
+    console.error('Error fetching greeting:', error);
+    throw error;
+  }
+});
+
+export default fetchRandomGreeting;
